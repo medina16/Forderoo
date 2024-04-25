@@ -1,5 +1,5 @@
 # Forderoo
-Sistem Pemesanan Makanan
+Sistem Pemesanan Restoran Berbasis Web
 
 Oleh Kelompok 5 ADS P2
 - Syifa Ainul Qolbiyah (G6401211007)
