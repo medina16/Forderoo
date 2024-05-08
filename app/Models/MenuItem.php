@@ -15,4 +15,12 @@ class MenuItem extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
+
+    public function menuItem(){
+        return $this->hasMany(FavListItem::class);
+    }
+
+    public function orderItem(){
+        return $this->hasMany(OrderItem::class);
+    }
 }

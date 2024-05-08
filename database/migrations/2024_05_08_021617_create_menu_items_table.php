@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Menu_Items', function (Blueprint $table) {
+        Schema::create('menu_items', function (Blueprint $table) {
             $table->id('id_menuItem');
-            $table->integer('id_category');
+            $table->unsignedBigInteger('id_category');
+            $table->foreign('id_category')->references('id_category')->on('categories');
+            
             $table->string('name');
             $table->string('description');
             $table->integer('price');
             $table->boolean('isAvailable')->default(false);
-            $table->string('photo_filename', length: 512)->nullable();
+            $table->string('photo_filename')->nullable();
             $table->integer('sales')->default(0);
             $table->timestamps();
         });
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Menu_Items');
+        Schema::dropIfExists('menu_items');
     }
 };
