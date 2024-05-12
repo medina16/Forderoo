@@ -2,76 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AdminAccount;
-use App\Http\Requests\StoreAdminAccountRequest;
-use App\Http\Requests\UpdateAdminAccountRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AdminAccountController extends Controller
 {
+    // public function login(Request $request)
+    // {
+    //     $credentials = $request->validate([
+    //         'username' => 'required',
+    //         'password' => 'required',
+    //     ]);
+ 
+    //     if(Auth::guard('admin')->attempt($credentials)){
+    //         $request->session()->regenerate();
+    //         return redirect()->intended(route('adminDashboard'))->with('success','You are Logged in sucessfully.');
+    //     }
+    //     else{
+    //         return back()->with('error','Whoops! invalid username and password.');
+    //     }
+    // }
 
-    public function login(){
-
-    }
-
-    public function logout(){
-
-    }
+    // public function logout(){
+    //     auth()->guard('admin')->logout();
+    //     Session::flush();
+    //     Session::put('success', 'You are logged out sucessfully');
+    //     return redirect()->intended(route('adminLogin'));
+    // }
 
     //----------------------------------
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreAdminAccountRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(AdminAccount $adminAccount)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(AdminAccount $adminAccount)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateAdminAccountRequest $request, AdminAccount $adminAccount)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(AdminAccount $adminAccount)
-    {
-        //
-    }
 }

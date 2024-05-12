@@ -1,23 +1,49 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
 use App\Models\CustomerAccount;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Requests\StoreCustomerAccountRequest;
 use App\Http\Requests\UpdateCustomerAccountRequest;
 
 class CustomerAccountController extends Controller
 {
-    public function login(){
 
-    }
+    // public function login(Request $request){
+
+    //     $credentials = $request->validate([
+    //         'email' => ['required', 'email:dns'],
+    //         'password' => 'required'
+    //     ]);
+
+    //     if(Auth::guard('customer')->attempt($credentials)){
+    //         $request->session()->regenerate();
+    //         return redirect('/browse');
+    //     };
+        
+    //     return back()->with('loginError', 'Login gagal!');
+        
+    // }
 
     public function logout(){
 
     }
 
-    public function register(){
+    public function register(Request $request){
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'email' => ['required', 'email:dns', 'unique:customer_accounts'], // harus unik di table users
+            'password' => 'required|min:5|max:16'
+        ]);
 
+        //dd('registrasi berhasil');
+        
+        CustomerAccount::create($validatedData);
+        //$request->session()->flash('success', 'Registrasi berhasil! Silakan login');
+
+        return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login');
     }
 
     public function delete(){

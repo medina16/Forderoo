@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id('id_order');
-            $table->unsignedBigInteger('id_customer');
+            $table->unsignedBigInteger('id_customer')->nullable();
             $table->foreign('id_customer')->references('id_customer')->on('customer_accounts');
             
             $table->unsignedTinyInteger('status')->default(Order::PENDING);

@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Ayam sambal matah terlezat yang pernah medina rasakan :)',
             'price' => '30000',
             'isAvailable' => '1',
-            'photo_filename' => "/public/menuimg/menua.jpe",
+            'photo_filename' => "/menuimg/matah.jpg",
             'sales' => '10'
         ]);
 

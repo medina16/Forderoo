@@ -9,8 +9,19 @@ use Illuminate\Database\Eloquent\Model;
 class CustomerAccount extends Authenticatable
 {
     use HasFactory;
+
+    protected $guard = 'customer';
+    
     protected $guarded = [
         'id_customer'
+    ];
+
+    protected $casts = [
+        'password' => 'hashed',
+    ];
+
+    protected $hidden = [
+        'password',
     ];
 
     public function favListItem(){

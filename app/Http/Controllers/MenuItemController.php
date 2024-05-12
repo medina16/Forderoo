@@ -20,15 +20,15 @@ class MenuItemController extends Controller
 
     }
 
+    public function getMenuList(){
+        return view('menupage', [
+            'title' => 'Home',
+            'menuitems' => MenuItem::all()->sortBy('name')
+        ]);
+    }
+
     //----------------------------------------
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.

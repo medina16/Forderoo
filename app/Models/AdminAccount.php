@@ -9,8 +9,20 @@ use Illuminate\Database\Eloquent\Model;
 class AdminAccount extends Authenticatable
 {
     use HasFactory;
+
+    protected $guard = 'admin';
+
     protected $fillable = [
         'username',
         'password',
     ];
+
+    protected $casts = [
+        'password' => 'hashed',
+    ];
+
+    protected $hidden = [
+        'password',
+    ];
+
 }
