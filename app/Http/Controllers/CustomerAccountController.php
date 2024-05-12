@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CustomerAccount;
-use App\Models\User;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -14,7 +14,7 @@ class CustomerAccountController extends Controller
         if (session()->has('id_customer')) {
             return back();
         }
-        return view('customer.loginPage', ['title' => 'Admin Login']);
+        return view('customer.loginPage', ['title' => 'Customer Login']);
     }
 
     public function login(Request $request)
@@ -25,12 +25,13 @@ class CustomerAccountController extends Controller
         ]);
 
         if (Auth::guard('customer')->attempt($credentials)) {
-            $userId = CustomerAccount::firstWhere('email', $request->email)->id_customer;
+            $userId = CustomerAccount::firstWhere('email', $request->email)->id;
             $userName = CustomerAccount::firstWhere('email', $request->email)->name;
+            
+            $request->session()->regenerate();
             $request->session()->put('id_customer', $userId);
             $request->session()->put('name', $userName);
 
-            $request->session()->regenerate();
             return redirect()->intended('/browse')->with('loginSuccess', 'Login berhasil! Selamat datang kembali');
         }
 
@@ -56,7 +57,7 @@ class CustomerAccountController extends Controller
 
         //dd('registrasi berhasil');
         
-        User::create($validatedData);
+        CustomerAccount::create($validatedData);
         //$request->session()->flash('success', 'Registrasi berhasil! Silakan login');
 
         return redirect()->intended('/login')->with('success', 'Registrasi berhasil! Silakan login');

@@ -24,7 +24,7 @@ class AdminAccountController extends Controller
             return redirect('/admin/login')->with('error', 'Please login to continue');
         }
 
-        $username = AdminAccount::firstWhere('id_admin', session('id_admin'))->username;
+        $username = AdminAccount::firstWhere('id', session('id_admin'))->username;
         return view('admin.dashboard', ['title' => 'Dashboard', 'username' => $username]);   
     }
 
@@ -37,7 +37,7 @@ class AdminAccountController extends Controller
         ]);
  
         if(Auth::guard('admin')->attempt($credentials)){
-            $userId = AdminAccount::firstWhere('username', $request->username)->id_admin;
+            $userId = AdminAccount::firstWhere('username', $request->username)->id;
             $request->session()->put('id_admin', $userId);
 
             $request->session()->regenerate();
