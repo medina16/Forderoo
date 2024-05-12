@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FavListItem;
+use App\Models\CustomerAccount;
 use App\Http\Requests\StoreFavListItemRequest;
 use App\Http\Requests\UpdateFavListItemRequest;
 
@@ -17,8 +18,18 @@ class FavListItemController extends Controller
 
     }
     
-    public function getCustFave(){
+    public function getCustFav(){
+        if (!session()->has('id_customer')) {
+            return redirect('/login')->with('error', 'Please login to continue');
+        }
 
+        $customer = CustomerAccount::find(1);
+        $favitems = $customer->favListItem()->with('menuItem')->get();
+
+        return view('customer.favlist', [
+            'title' => 'Home',
+            'favitems' => $favitems
+        ]);
     }
 
     // -------------------------------

@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('fav_list_items', function (Blueprint $table) {
-            $table->id('id_favListItem');
-            $table->unsignedBigInteger('id_menuItem');
-            $table->foreign('id_menuItem')->references('id_menuItem')->on('menu_items');
-            $table->unsignedBigInteger('id_customer');
-            $table->foreign('id_customer')->references('id_customer')->on('customer_accounts');
+            $table->id();
+            $table->unsignedBigInteger('menu_item_id');
+            $table->foreign('menu_item_id')->references('id')->on('menu_items');
+            $table->unsignedBigInteger('customer_account_id');
+            $table->foreign('customer_account_id')->references('id')->on('customer_accounts');
             $table->timestamps();
         });
     }

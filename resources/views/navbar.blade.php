@@ -12,14 +12,15 @@
         </ul>
         <ul class="navbar-nav ms-auto">
 
-            @if(session()->has('customer_id'))
+            @if(session()->has('id_customer'))
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Welcome back, {{ auth()->guard('customer')->name }}
+                        Welcome back, {{ session('name') }}
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/home">Homeee</a></li>
-                        <li><a class="dropdown-item" href="#">ssss</a></li>
+                        <li><a class="dropdown-item" href="/browse">Browse Menu</a></li>
+                        <li><a class="dropdown-item" href="/history">Order History</a></li>
+                        <li><a class="dropdown-item" href="/favorite">Favorite Menu</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form action="/logout" method="post">

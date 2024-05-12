@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('menu_items', function (Blueprint $table) {
-            $table->id('id_menuItem');
-            $table->unsignedBigInteger('id_category');
-            $table->foreign('id_category')->references('id_category')->on('categories');
+            $table->id();
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
             
             $table->string('name');
             $table->string('description');

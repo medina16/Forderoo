@@ -18,6 +18,6 @@ class FavListItem extends Model
     }
 
     public function menuItem(){
-        return $this->hasMany(MenuItem::class);
+        return $this->belongsTo(MenuItem::class);
     }
 }

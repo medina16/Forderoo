@@ -14,9 +14,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id('id_order');
-            $table->unsignedBigInteger('id_customer')->nullable();
-            $table->foreign('id_customer')->references('id_customer')->on('customer_accounts');
+            $table->id();
+            $table->unsignedBigInteger('customer_account_id')->nullable();
+            $table->foreign('customer_account_id')->references('id')->on('customer_accounts');
             
             $table->unsignedTinyInteger('status')->default(Order::PENDING);
             $table->string('note');

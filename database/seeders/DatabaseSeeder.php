@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(10)->create();
+        // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         MenuItem::create([
-            'id_category' => '1',
+            'category_id' => '1',
             'name' => 'Menu A',
             'description' => 'Ayam sambal matah terlezat yang pernah medina rasakan :)',
             'price' => '30000',
@@ -63,19 +63,44 @@ class DatabaseSeeder extends Seeder
             'sales' => '10'
         ]);
 
+        MenuItem::create([
+            'category_id' => '2',
+            'name' => 'Menu B',
+            'description' => 'SDGERBERBEBREBRBTRB',
+            'price' => '20000',
+            'isAvailable' => '1',
+            'photo_filename' => "/menuimg/matah.jpg",
+            'sales' => '10'
+        ]);
+
+        MenuItem::create([
+            'category_id' => '2',
+            'name' => 'Menu C',
+            'description' => 'EERBEBEGTETGRET5G3',
+            'price' => '20000',
+            'isAvailable' => '1',
+            'photo_filename' => "/menuimg/matah.jpg",
+            'sales' => '10'
+        ]);
+
         FavListItem::create([
-            'id_menuItem' => '1',
-            'id_customer' => '1'
+            'menu_item_id' => '1',
+            'customer_account_id' => '1'
+        ]);
+
+        FavListItem::create([
+            'menu_item_id' => '2',
+            'customer_account_id' => '1'
         ]);
 
         Order::create([
-            'id_customer' => '1',
+            'customer_account_id' => '1',
             'note' => 'Sambal matahnya jangan yang abal :('
         ]);
 
         OrderItem::create([
-            'id_order' => '1',
-            'id_menuItem' => '1',
+            'order_id' => '1',
+            'menu_item_id' => '1',
             'quantity' => '10'
         ]);
     

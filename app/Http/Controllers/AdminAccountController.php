@@ -9,9 +9,24 @@ use App\Models\AdminAccount;
 
 class AdminAccountController extends Controller
 {
-    public function loginForm()
-    {
-        return view('admin.loginPage', ['title' => 'Admin Login']);    }
+    public function loginForm(){
+        
+        if (session()->has('id_admin')) {
+            return redirect('/admin');
+        }
+
+        return view('admin.loginPage', ['title' => 'Admin Login']);   
+    }
+
+
+    public function dashboardPage(){
+        if (!session()->has('id_admin')) {
+            return redirect('/admin/login')->with('error', 'Please login to continue');
+        }
+
+        $username = AdminAccount::firstWhere('id_admin', session('id_admin'))->username;
+        return view('admin.dashboard', ['title' => 'Dashboard', 'username' => $username]);   
+    }
 
 
     public function login(Request $request)
@@ -26,7 +41,7 @@ class AdminAccountController extends Controller
             $request->session()->put('id_admin', $userId);
 
             $request->session()->regenerate();
-            return redirect()->intended(route('adminDashboard'))->with('success','You are Logged in sucessfully.');
+            return redirect()->intended('/admin')->with('success','You are Logged in sucessfully.');
         }
         else{
             return back()->with('error','Whoops! invalid username and password.');

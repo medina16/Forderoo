@@ -1,12 +1,13 @@
 <?php
 
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\MenuItemController;
+use App\Http\Controllers\FavListItemController;
 use App\Http\Controllers\AdminAccountController;
 use App\Http\Controllers\CustomerAccountController;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::get('/order/{tablenumber}', function($tablenumber){
 
 Route::get('/browse', [MenuItemController::class, 'getMenuList'])->middleware('adminauth');
 
+
 Route::get('/register',[CustomerAccountController::class, 'registerForm'])->middleware('guest');
 Route::post('/register', [CustomerAccountController::class, 'register']);
 
@@ -39,30 +41,17 @@ Route::post('/login', [CustomerAccountController::class, 'login']);
 
 Route::post('/logout', [CustomerAccountController::class, 'logout']);
 
-
-
+Route::get('/favorite', [FavListItemController::class, 'getCustFav']);
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     // Buka halaman login admin
-    Route::get('/login', function(){
-        return view('admin.loginpage');
-    })->name('adminLogin')->middleware('guest');
+    Route::get('/login', [AdminAccountController::class, 'loginForm'])->name('adminLogin')->middleware('guest');
     // Aksi login admin
     Route::post('/login', [AdminAccountController::class, 'login'])->name('adminLoginPost');
     // Aksi logout admin
     Route::post('/logout', [AdminAccountController::class, 'logout'])->name('adminLogoutPost');
 
     Route::group(['middleware' => 'adminauth'], function () {
-        Route::get('/', function () {
-            return view('admin.dashboard');
-        })->name('adminDashboard');
-
+        Route::get('/', [AdminAccountController::class, 'dashboardPage']);
     });
 });
-
-// Route::post('/order/{tablenumber}', function(){
-//     return view('menupage', ['title' => 'Order',
-//                              'table_number' => $tablenumber                        
-//                             ]);
-// }
-// );

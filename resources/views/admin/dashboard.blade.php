@@ -5,7 +5,7 @@
 </head>
 <body>
     <div class="container">
-        <p>Welcome, {{ session('id_admin') }}</p>
+        <p>Welcome, {{ $username }}</p>
     </div>
 
     <form action="{{ route('adminLogoutPost') }}" method="post">

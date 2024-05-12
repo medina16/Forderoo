@@ -71,7 +71,7 @@ class MenuItem extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function menuItem(){
+    public function favList(){
         return $this->hasMany(FavListItem::class);
     }
 

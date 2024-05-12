@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Session;
 
 class CustomerAccountController extends Controller
 {
-    public function loginForm()
-    {
+    public function loginForm(){
+        if (session()->has('id_customer')) {
+            return back();
+        }
         return view('customer.loginPage', ['title' => 'Admin Login']);
     }
 
@@ -23,8 +25,10 @@ class CustomerAccountController extends Controller
         ]);
 
         if (Auth::guard('customer')->attempt($credentials)) {
-            $userId = CustomerAccount::firstWhere('email', $request->email)->get('id_customer');
+            $userId = CustomerAccount::firstWhere('email', $request->email)->id_customer;
+            $userName = CustomerAccount::firstWhere('email', $request->email)->name;
             $request->session()->put('id_customer', $userId);
+            $request->session()->put('name', $userName);
 
             $request->session()->regenerate();
             return redirect()->intended('/browse')->with('loginSuccess', 'Login berhasil! Selamat datang kembali');
