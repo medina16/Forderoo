@@ -3,32 +3,44 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CustomerAccount;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
-use App\Http\Requests\StoreCustomerAccountRequest;
-use App\Http\Requests\UpdateCustomerAccountRequest;
 
 class CustomerAccountController extends Controller
 {
+    public function loginForm()
+    {
+        return view('customer.loginPage', ['title' => 'Admin Login']);
+    }
 
-    // public function login(Request $request){
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+                    'email' => ['required', 'email:dns'],
+                    'password' => 'required'
+        ]);
 
-    //     $credentials = $request->validate([
-    //         'email' => ['required', 'email:dns'],
-    //         'password' => 'required'
-    //     ]);
+        if (Auth::guard('customer')->attempt($credentials)) {
+            $userId = CustomerAccount::firstWhere('email', $request->email)->get('id_customer');
+            $request->session()->put('id_customer', $userId);
 
-    //     if(Auth::guard('customer')->attempt($credentials)){
-    //         $request->session()->regenerate();
-    //         return redirect('/browse');
-    //     };
-        
-    //     return back()->with('loginError', 'Login gagal!');
-        
-    // }
+            $request->session()->regenerate();
+            return redirect()->intended('/browse')->with('loginSuccess', 'Login berhasil! Selamat datang kembali');
+        }
+
+        return back()->with('loginError', 'Login gagal!');
+    }
 
     public function logout(){
+        auth()->guard('customer')->logout();
+        Session::flush();
+        return redirect('/browse')->with('You are logged out sucessfully');
+    }
 
+    public function registerForm(){
+        return view('customer.registPage', ['title' => 'Customer Registration']);
     }
 
     public function register(Request $request){
@@ -40,10 +52,10 @@ class CustomerAccountController extends Controller
 
         //dd('registrasi berhasil');
         
-        CustomerAccount::create($validatedData);
+        User::create($validatedData);
         //$request->session()->flash('success', 'Registrasi berhasil! Silakan login');
 
-        return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login');
+        return redirect()->intended('/login')->with('success', 'Registrasi berhasil! Silakan login');
     }
 
     public function delete(){
@@ -52,59 +64,4 @@ class CustomerAccountController extends Controller
 
     // ----------------------------------
     
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCustomerAccountRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(CustomerAccount $customerAccount)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(CustomerAccount $customerAccount)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCustomerAccountRequest $request, CustomerAccount $customerAccount)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(CustomerAccount $customerAccount)
-    {
-        //
-    }
 }

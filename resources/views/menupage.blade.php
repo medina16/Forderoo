@@ -4,11 +4,7 @@
     <h1>Nama Restoran</h1>
     @if(session()->has('tablenumber'))
         <p>Pesanan untuk Table {{ session('tablenumber') }}</p>
-        <p> Welcome back, {{ Auth::guard('customer')->user() }}</p>
     @endif
-    @guest
-    You're not logged in!
-    @endguest
     <br>
     @foreach($menuitems as $item)
         <article class="mb-5">

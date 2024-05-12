@@ -4,6 +4,7 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -19,8 +20,19 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * Register any authentication / authorization services.
      */
-    public function boot(): void
+
+     public function boot()
     {
-        //
+        // Define custom guard for 'customer'
+        Auth::viaRequest('customer', function ($request) {
+            return $request->user('customer');
+        });
+
+        // Define custom guard for 'admin'
+        Auth::viaRequest('admin', function ($request) {
+            return $request->user('admin');
+        });
     }
+
+   
 }

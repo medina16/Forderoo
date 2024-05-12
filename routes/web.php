@@ -31,17 +31,16 @@ Route::get('/order/{tablenumber}', function($tablenumber){
 
 Route::get('/browse', [MenuItemController::class, 'getMenuList'])->middleware('adminauth');
 
-Route::get('/register', function(){
-    return view('registpage', ['title' => 'Register']);
-})->middleware('guest');
-
+Route::get('/register',[CustomerAccountController::class, 'registerForm'])->middleware('guest');
 Route::post('/register', [CustomerAccountController::class, 'register']);
 
-Route::get('/login', function(){
-    return view('customer.loginPage', ['title' => 'Login']);
-})->name('customerLogin')->middleware('guest');
-
+Route::get('/login',[CustomerAccountController::class, 'loginForm'])->name('login')->middleware('guest');
 Route::post('/login', [CustomerAccountController::class, 'login']);
+
+Route::post('/logout', [CustomerAccountController::class, 'logout']);
+
+
+
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     // Buka halaman login admin

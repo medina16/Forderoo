@@ -12,7 +12,7 @@
         </ul>
         <ul class="navbar-nav ms-auto">
 
-            @auth('customer')
+            @if(session()->has('customer_id'))
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Welcome back, {{ auth()->guard('customer')->name }}
@@ -33,7 +33,7 @@
                 <li class="nav-item">
                         <a href="/login" class="nav-link">Login</a>
                 </li>
-            @endauth
+            @endif
         </ul>
         </div>
     </div>
