@@ -9,15 +9,22 @@ class Order extends Model
 {
     use HasFactory;
 
-    const PENDING = 0;
-    const PROCESSING = 1;
-    const SHIPPED = 2;
-    const DELIVERED = 3;
-    const CANCELED = 4;
-
     protected $guarded = [
         'id_order'
     ];
+
+    public function getStatus(){
+        switch($this->status){
+            case 0: 
+                return "Menunggu pembayaran";
+            case 1:
+                return "Sedang diproses";
+            case 2:
+                return "Selesai";
+            case 3:
+                return "Dibatalkan";
+        }
+    }
 
     public function orderItem(){
         return $this->hasMany(OrderItem::class);

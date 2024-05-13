@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\MenuItem;
+use App\Models\AdminAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use App\Models\AdminAccount;
 
 class AdminAccountController extends Controller
 {
@@ -25,7 +27,12 @@ class AdminAccountController extends Controller
         }
 
         $username = AdminAccount::firstWhere('id', session('id_admin'))->username;
-        return view('admin.dashboard', ['title' => 'Dashboard', 'username' => $username]);   
+        return view('admin.dashboard', [
+            'title' => 'Dashboard', 
+            'username' => $username,
+            'orders' => Order::all(),
+            'menuitems' => MenuItem::all()
+        ]);   
     }
 
 

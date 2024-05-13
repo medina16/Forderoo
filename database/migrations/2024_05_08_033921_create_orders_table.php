@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_account_id')->nullable();
             $table->foreign('customer_account_id')->references('id')->on('customer_accounts');
             
-            $table->unsignedTinyInteger('status')->default(Order::PENDING);
+            $table->unsignedTinyInteger('status')->default(0);
             $table->string('note');
             $table->timestamps();
         });

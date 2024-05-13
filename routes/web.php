@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\FavListItemController;
 use App\Http\Controllers\AdminAccountController;
@@ -30,8 +31,8 @@ Route::get('/order/{tablenumber}', function($tablenumber){
     return redirect('/browse');
 });
 
-Route::get('/browse', [MenuItemController::class, 'getMenuList'])->middleware('adminauth');
-
+Route::get('/browse', [MenuItemController::class, 'getMenuList']);
+Route::get('/search', [MenuItemController::class, 'searchItem']);
 
 Route::get('/register',[CustomerAccountController::class, 'registerForm'])->middleware('guest');
 Route::post('/register', [CustomerAccountController::class, 'register']);
@@ -42,6 +43,7 @@ Route::post('/login', [CustomerAccountController::class, 'login']);
 Route::post('/logout', [CustomerAccountController::class, 'logout']);
 
 Route::get('/favorite', [FavListItemController::class, 'getCustFav']);
+Route::get('/history', [OrderController::class, 'getCustHistory']);
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     // Buka halaman login admin

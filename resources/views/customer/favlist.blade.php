@@ -1,4 +1,4 @@
-@extends('main')
+@extends('layout')
 
 @section('container')
     <h1>Menu Favorit</h1>

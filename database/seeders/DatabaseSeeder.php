@@ -98,10 +98,33 @@ class DatabaseSeeder extends Seeder
             'note' => 'Sambal matahnya jangan yang abal :('
         ]);
 
+        Order::create([
+            'customer_account_id' => '1',
+            'note' => 'Sambal matahnya jangan pake bawang'
+        ]);
+
         OrderItem::create([
             'order_id' => '1',
             'menu_item_id' => '1',
             'quantity' => '10'
+        ]);
+
+        OrderItem::create([
+            'order_id' => '1',
+            'menu_item_id' => '2',
+            'quantity' => '2'
+        ]);
+
+        OrderItem::create([
+            'order_id' => '1',
+            'menu_item_id' => '3',
+            'quantity' => '4'
+        ]);
+
+        OrderItem::create([
+            'order_id' => '2',
+            'menu_item_id' => '1',
+            'quantity' => '1'
         ]);
     
     }

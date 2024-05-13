@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\CustomerAccount;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 
@@ -21,7 +22,17 @@ class OrderController extends Controller
     }
 
     public function getCustHistory(){
+        if (!session()->has('id_customer')) {
+            return redirect('/login')->with('error', 'Please login to continue');
+        }
 
+        $customer = CustomerAccount::find(1);
+        $orders = $customer->order()->get();
+
+        return view('customer.history', [
+            'title' => 'Home',
+            'orders' => $orders
+        ]);
     }
 
     // --------------------------

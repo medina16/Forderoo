@@ -12,7 +12,6 @@
     <div class="auth-wrapper auth-basic px-2">
         <div class="auth-inner my-2">
             <!-- Login basic -->
-            <p>{{ session('id_admin') }}</p>
             @if(\Session::get('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <div class="alert-body">

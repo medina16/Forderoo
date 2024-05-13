@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\MenuItem;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreMenuItemRequest;
 use App\Http\Requests\UpdateMenuItemRequest;
 
@@ -20,10 +22,21 @@ class MenuItemController extends Controller
 
     }
 
+    public function searchItem(Request $request){
+        $search = $request->search;
+        $results = MenuItem::where(function($query) use ($search){
+            $query->where('name', 'like', "%$search%")
+                  ->orWhere('description', 'like', "%$search%");
+        })->get(); // Added ->get() to execute the query and retrieve results
+    
+        return view('menupage', compact('results'))->with('title', 'Search results'); // Simplified passing title to view
+    }
+    
+
     public function getMenuList(){
         return view('menupage', [
-            'title' => 'Home',
-            'menuitems' => MenuItem::all()->sortBy('name')
+            'title' => 'Browse Menu',
+            'menuitems' => Category::with('menuItem')->get()
         ]);
     }
 
