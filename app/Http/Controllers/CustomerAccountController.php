@@ -41,7 +41,7 @@ class CustomerAccountController extends Controller
     public function logout(){
         auth()->guard('customer')->logout();
         Session::flush();
-        return redirect('/browse')->with('You are logged out sucessfully');
+        return redirect('/browse')->with('logoutSuccess', 'You are logged out sucessfully');
     }
 
     public function registerForm(){

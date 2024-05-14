@@ -16,6 +16,7 @@
                 <th scope="col">Order ID</th>
                 <th scope="col">Dibuat pada</th>
                 <th scope="col">Terakhir diperbarui</th>
+                <th scope="col">Nomor meja</th>
                 <th scope="col">Status</th>
                 <th scope="col">Catatan</th>
                 <th scope="col">Aksi</th>
@@ -27,6 +28,7 @@
                     <th scope="row">{{ $order->id }}</th>
                     <td>{{ $order->created_at }}</td>
                     <td>{{ $order->updated_at }}</td>
+                    <td>{{ $order->table_number }}</td>
                     <td>{{ $order->getStatus() }}</td>
                     <td>{{ $order->note }}</td>
                     <td></td>

@@ -17,7 +17,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        <p> Pesanan untuk Table {{ session('tablenumber') }}</p>
         
         <main class="form-signin w-100 m-auto">
 
