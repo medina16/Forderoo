@@ -54,33 +54,53 @@ class DatabaseSeeder extends Seeder
         ]);
 
         MenuItem::create([
-            'category_id' => '1',
-            'name' => 'Menu A',
-            'description' => 'Ayam sambal matah terlezat yang pernah medina rasakan :)',
+            'category_id' => '2',
+            'name' => 'Pudding',
+            'description' => 'Pudding is a type of food. It can be either a dessert, served after the main meal, or a savoury dish, served as part of the main meal.',
             'price' => '30000',
             'isAvailable' => '1',
-            'photo_filename' => "/menuimg/matah.jpg",
-            'sales' => '10'
+            'photo_filename' => "/menuimg/puding.jpg",
+            'sales' => '9'
         ]);
 
         MenuItem::create([
             'category_id' => '2',
-            'name' => 'Menu B',
-            'description' => 'SDGERBERBEBREBRBTRB',
+            'name' => 'Kue',
+            'description' => 'Cake is a flour confection made from flour, sugar, and other ingredients and is usually baked. In their oldest forms, cakes were modifications of bread.',
+            'price' => '25000',
+            'isAvailable' => '1',
+            'photo_filename' => "/menuimg/kue.jpg",
+            'sales' => '5'
+        ]);
+
+        MenuItem::create([
+            'category_id' => '4',
+            'name' => 'Soda',
+            'description' => 'A soft drink (see § Terminology for other names) is any water-based flavored drink, usually but not necessarily carbonated, and typically including added sweetener.',
             'price' => '20000',
             'isAvailable' => '1',
-            'photo_filename' => "/menuimg/matah.jpg",
+            'photo_filename' => "/menuimg/soda.jpg",
             'sales' => '10'
         ]);
 
         MenuItem::create([
-            'category_id' => '2',
-            'name' => 'Menu C',
-            'description' => 'EERBEBEGTETGRET5G3',
-            'price' => '20000',
+            'category_id' => '1',
+            'name' => 'Burger',
+            'description' => 'A hamburger, also called a burger, is a food consisting of fillings—usually a patty of ground meat, typically beef—placed inside a sliced bun or bread roll.',
+            'price' => '60000',
+            'isAvailable' => '1',
+            'photo_filename' => "/menuimg/burger.jpg",
+            'sales' => '15'
+        ]);
+
+        MenuItem::create([
+            'category_id' => '3',
+            'name' => 'Sambal Matah',
+            'description' => 'Kesukaan saya',
+            'price' => '10000',
             'isAvailable' => '1',
             'photo_filename' => "/menuimg/matah.jpg",
-            'sales' => '10'
+            'sales' => '13'
         ]);
 
         FavListItem::create([
@@ -95,11 +115,13 @@ class DatabaseSeeder extends Seeder
 
         Order::create([
             'customer_account_id' => '1',
+            'table_number' => '20',
             'note' => 'Sambal matahnya jangan yang abal :('
         ]);
 
         Order::create([
             'customer_account_id' => '1',
+            'table_number' => '17',
             'note' => 'Sambal matahnya jangan pake bawang'
         ]);
 
