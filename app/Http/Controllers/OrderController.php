@@ -19,7 +19,6 @@ class OrderController extends Controller
         // Create a new order
         $order = Order::create([
             'customer_account_id' => session('id_customer'),
-            'note' => $request->note,
             'table_number' => session('tablenumber')
         ]);
     
@@ -34,26 +33,9 @@ class OrderController extends Controller
     
         // Optionally, you can clear the cart after the order is created
         Session::forget('cart');
-        Session::put('id_order', $order->id);
 
         // Return a response, such as a redirect or a success message
-        return redirect('/invoice')->with('success', 'Order has been created successfully.');
-    }
-
-    public function getInvoice(){
-        if(session()->has('id_order')){
-            $order = Order::find(session('id_order'));
-            $orderItems = $order->orderItem()->get();
-
-            return view('invoice', [
-                'title' => 'Invoice',
-                'order' => $order,
-                'orderItems' => $orderItems
-            ]);
-        }
-        else{
-            return redirect('/browse');
-        }
+        return redirect('/order_success');
     }
     
     public function done(){

@@ -32,8 +32,12 @@
     @if($title == "Browse Menu")
         @foreach($menuitems as $category)
             <h2>{{ $category->name }}</h2>
-            @foreach($category->menuItem as $categoryitem)
-                <article class="mb-2">
+            @foreach($category->menuItem->sortByDesc('isAvailable') as $categoryitem)
+                @if($categoryitem->isAvailable == 1)
+                    <article class="mb-2">
+                @else
+                    <article class="mb-2" style="opacity: 70%">
+                @endif
                     <img src="{{ $categoryitem->photo_filename }}" width="200" />
                     <h4>{{ $categoryitem->name }}</h4>
                     <p><b>Rp{{ $categoryitem->price }}</b></p>
@@ -46,9 +50,15 @@
                     @endphp
 
                     <!-- Add to Cart Button -->
-                    <button type="button" class="add-to-cart-btn btn btn-primary" data-item-id="{{ $categoryitem->id }}" style="{{ $inCart ? 'display:none;' : '' }}">
+                    @if($categoryitem->isAvailable == 1)
+                    <button class="add-to-cart-btn btn btn-primary" data-item-id="{{ $categoryitem->id }}" style="{{ $inCart ? 'display:none;' : '' }}">
                         Add
                     </button>
+                    @else
+                        <button type="button" class="btn btn-danger">
+                            Out of stock
+                        </button>
+                    @endif
 
                     <!-- Quantity Control -->
                     <div class="quantity-control" data-item-id="{{ $categoryitem->id }}" style="{{ $inCart ? '' : 'display:none;' }}">
@@ -61,15 +71,19 @@
         @endforeach
 
     @elseif($title == "Search results")
-
-        @foreach($results as $item)
-            <article class="mb-2">
-                <img src="{{ $item->photo_filename }}" width="200" />
-                <h4>{{ $item->name }}</h4>
-                <p>{{ $item->description }}</p>
-                <button type="button" class="btn btn-primary">Rp{{ $item->price }}</button>
-            </article>
-        @endforeach
+        <a href="/" class="btn btn-outline-secondary"><i class="bi bi-arrow-left-circle-fill"></i> Kembali</a>
+        @if($results == null)
+            <p>Hasil pencarian tidak ditemukan</p>
+        @else
+            @foreach($results as $item)
+                <article class="mb-2">
+                    <img src="{{ $item->photo_filename }}" width="200" />
+                    <h4>{{ $item->name }}</h4>
+                    <p>{{ $item->description }}</p>
+                    <button type="button" class="btn btn-primary">Rp{{ $item->price }}</button>
+                </article>
+            @endforeach
+        @endif
 
     @endif
 

@@ -31,7 +31,12 @@
                     <td>{{ $order->table_number }}</td>
                     <td>{{ $order->getStatus() }}</td>
                     <td>{{ $order->note }}</td>
-                    <td></td>
+                    <td>
+                        <form action="" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-primary" href="#"><i class="bi bi-box-arrow-right"></i>Edit</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>

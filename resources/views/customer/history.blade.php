@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('container')
+<a href="/" class="btn btn-outline-secondary"><i class="bi bi-arrow-left-circle-fill"></i> Kembali</a>
     <h1>Riwayat Pemesanan</h1>
     <br>
     @foreach($orders as $order)
@@ -15,7 +16,6 @@
                 @endforeach
             </ul>
             <p>Total: Rp<?php echo $total ?></p>
-            <p>Catatan: {{ $order->note }}</p>
             <p>Status: {{ $order->getStatus() }}</p>
         </article>
     @endforeach

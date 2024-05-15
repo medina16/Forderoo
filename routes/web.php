@@ -29,10 +29,10 @@ use App\Http\Controllers\CustomerAccountController;
 
 Route::get('/order/{tablenumber}', function($tablenumber){
     Session::put('tablenumber', $tablenumber);
-    return redirect('/browse');
+    return redirect('/');
 });
 
-Route::get('/browse', [MenuItemController::class, 'getMenuList']);
+Route::get('/', [MenuItemController::class, 'getMenuList']);
 Route::get('/search', [MenuItemController::class, 'searchItem']);
 
 Route::get('/register',[CustomerAccountController::class, 'registerForm'])->middleware('guest');
@@ -51,7 +51,9 @@ Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add')
 Route::post('/cart/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 Route::post('/cart', [OrderController::class, 'create']);
-Route::get('/invoice', [OrderController::class, 'getInvoice']);
+Route::get('/order_success', function(){
+    return view('ordersuccess', ['title' => 'Order Success']);
+});
 
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
