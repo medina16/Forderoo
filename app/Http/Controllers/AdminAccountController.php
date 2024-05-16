@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Category;
 use App\Models\MenuItem;
 use App\Models\AdminAccount;
 use Illuminate\Http\Request;
@@ -35,6 +36,42 @@ class AdminAccountController extends Controller
         ]);   
     }
 
+    public function manageOrder(){
+        if (!session()->has('id_admin')) {
+            return redirect('/admin/login')->with('error', 'Please login to continue');
+        }
+
+        return view('admin.manageorder', [
+            'title' => 'Manage Order', 
+            'orders' => Order::all(),
+        ]);   
+    }
+
+    public function createMenu(){
+        return view('admin.newmenu', [
+            'title' => 'Buat Menu Baru',
+            'categories' => Category::all()
+        ]);
+    }
+
+    public function editMenu(Request $request){
+        return view('admin.editmenu', [
+            'title' => 'Buat Menu Baru',
+            'categories' => Category::all(),
+            'menuItem' => MenuItem::find($request->id)
+        ]);
+    }
+
+    public function manageMenu(){
+        if (!session()->has('id_admin')) {
+            return redirect('/admin/login')->with('error', 'Please login to continue');
+        }
+
+        return view('admin.managemenu', [
+            'title' => 'Manage Menu', 
+            'menuitems' => MenuItem::all(),
+        ]);   
+    }
 
     public function login(Request $request)
     {

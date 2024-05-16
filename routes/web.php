@@ -66,5 +66,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
     Route::group(['middleware' => 'adminauth'], function () {
         Route::get('/', [AdminAccountController::class, 'dashboardPage']);
+        Route::get('/order', [AdminAccountController::class, 'manageOrder']);
+        Route::post('/order', [OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
+        Route::get('/menu', [AdminAccountController::class, 'manageMenu']);
+        Route::get('/menu/new', [AdminAccountController::class, 'createMenu']);
+        Route::post('/menu/new', [MenuItemController::class, 'addToMenu'])->name('newMenuPost');
+        Route::post('/menu/delete', [MenuItemController::class, 'removeFromMenu'])->name('deleteMenuPost');
+        Route::post('/menu/edit', [AdminAccountController::class, 'editMenu']);
+        Route::post('/menu/edited', [MenuItemController::class, 'editInfo'])->name('editMenuPost');
+        Route::post('/menu/is_available', [MenuItemController::class, 'updateAvailable'])->name('admin.menu.isAvailable');
     });
 });

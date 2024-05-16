@@ -10,8 +10,8 @@
             <?php $total = 0?>
             <ul>
                 @foreach($order->orderItem as $item)
-                    <?php $price = $item->menuItem->price?>
-                    <li>{{ $item->menuItem->name }} - Rp {{ $price }}</li>
+                    <?php $price = $item->menuItem->price * $item->quantity?>
+                    <li>{{ $item->menuItem->name }} - {{ $item->quantity }}pcs - Rp {{ $price }}</li>
                     <?php $total = $total + $price; $price = 0?>
                 @endforeach
             </ul>
