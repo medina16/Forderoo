@@ -29,10 +29,10 @@ use App\Http\Controllers\CustomerAccountController;
 
 Route::get('/order/{tablenumber}', function($tablenumber){
     Session::put('tablenumber', $tablenumber);
-    return redirect('/browse');
+    return redirect('/');
 });
 
-Route::get('/browse', [MenuItemController::class, 'getMenuList']);
+Route::get('/', [MenuItemController::class, 'getMenuList']);
 Route::get('/search', [MenuItemController::class, 'searchItem']);
 
 Route::get('/register',[CustomerAccountController::class, 'registerForm'])->middleware('guest');
@@ -51,7 +51,9 @@ Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add')
 Route::post('/cart/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 Route::post('/cart', [OrderController::class, 'create']);
-Route::get('/invoice', [OrderController::class, 'getInvoice']);
+Route::get('/order_success', function(){
+    return view('ordersuccess', ['title' => 'Order Success']);
+});
 
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
@@ -64,5 +66,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
     Route::group(['middleware' => 'adminauth'], function () {
         Route::get('/', [AdminAccountController::class, 'dashboardPage']);
+        Route::get('/order', [AdminAccountController::class, 'manageOrder']);
+        Route::post('/order', [OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
+        Route::get('/menu', [AdminAccountController::class, 'manageMenu']);
+        Route::get('/menu/new', [AdminAccountController::class, 'createMenu']);
+        Route::post('/menu/new', [MenuItemController::class, 'addToMenu'])->name('newMenuPost');
+        Route::post('/menu/delete', [MenuItemController::class, 'removeFromMenu'])->name('deleteMenuPost');
+        Route::post('/menu/edit', [AdminAccountController::class, 'editMenu']);
+        Route::post('/menu/edited', [MenuItemController::class, 'editInfo'])->name('editMenuPost');
+        Route::post('/menu/is_available', [MenuItemController::class, 'updateAvailable'])->name('admin.menu.isAvailable');
     });
 });

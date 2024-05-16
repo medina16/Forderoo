@@ -32,7 +32,7 @@ class CustomerAccountController extends Controller
             $request->session()->put('id_customer', $userId);
             $request->session()->put('name', $userName);
 
-            return redirect()->intended('/browse')->with('loginSuccess', 'Login berhasil! Selamat datang kembali');
+            return redirect()->intended('/')->with('loginSuccess', 'Login berhasil! Selamat datang kembali');
         }
 
         return back()->with('loginError', 'Login gagal!');
@@ -41,7 +41,7 @@ class CustomerAccountController extends Controller
     public function logout(){
         auth()->guard('customer')->logout();
         Session::flush();
-        return redirect('/browse')->with('logoutSuccess', 'You are logged out sucessfully');
+        return redirect('/')->with('logoutSuccess', 'You are logged out sucessfully');
     }
 
     public function registerForm(){

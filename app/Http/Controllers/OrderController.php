@@ -19,7 +19,6 @@ class OrderController extends Controller
         // Create a new order
         $order = Order::create([
             'customer_account_id' => session('id_customer'),
-            'note' => $request->note,
             'table_number' => session('tablenumber')
         ]);
     
@@ -34,35 +33,25 @@ class OrderController extends Controller
     
         // Optionally, you can clear the cart after the order is created
         Session::forget('cart');
-        Session::put('id_order', $order->id);
 
         // Return a response, such as a redirect or a success message
-        return redirect('/invoice')->with('success', 'Order has been created successfully.');
-    }
-
-    public function getInvoice(){
-        if(session()->has('id_order')){
-            $order = Order::find(session('id_order'));
-            $orderItems = $order->orderItem()->get();
-
-            return view('invoice', [
-                'title' => 'Invoice',
-                'order' => $order,
-                'orderItems' => $orderItems
-            ]);
-        }
-        else{
-            return redirect('/browse');
-        }
+        return redirect('/order_success');
     }
     
-    public function done(){
+    public function updateStatus(Request $request){
+        $validatedData = $request->validate([
+            'status' => 'required|in:0,1,2,3',
+        ]);
 
+        $id = $request->orderid;
+        $order = Order::find($id);
+
+        $order->status = $validatedData['status'];
+        $order->save();
+
+        return redirect()->back()->with('status', 'Order status updated successfully!');
     }
 
-    public function cancel(){
-
-    }
 
     public function getCustHistory(){
         if (!session()->has('id_customer')) {
@@ -70,7 +59,7 @@ class OrderController extends Controller
         }
 
         $customer = CustomerAccount::find(session('id_customer'));
-        $orders = $customer->order()->get();
+        $orders = $customer->order()->get()->sortByDesc('created_at');
 
         return view('customer.history', [
             'title' => 'Home',

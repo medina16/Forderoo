@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('container')
+<a href="/" class="btn btn-outline-secondary"><i class="bi bi-arrow-left-circle-fill"></i> Kembali</a>
     <h1>Your Cart</h1>
     @if(count($cartItems) > 0)
         @foreach($cartItems as $cartItem)

@@ -20,7 +20,6 @@ return new class extends Migration
             
             $table->unsignedInteger('table_number');
             $table->unsignedTinyInteger('status')->default(0);
-            $table->string('note')->nullable();
             $table->timestamps();
         });
     }

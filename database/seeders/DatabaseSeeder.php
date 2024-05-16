@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Pudding',
             'description' => 'Pudding is a type of food. It can be either a dessert, served after the main meal, or a savoury dish, served as part of the main meal.',
             'price' => '30000',
-            'isAvailable' => '1',
+            'isAvailable' => '0',
             'photo_filename' => "/menuimg/puding.jpg",
             'sales' => '9'
         ]);
@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
         MenuItem::create([
             'category_id' => '3',
             'name' => 'Sambal Matah',
-            'description' => 'Kesukaan saya',
+            'description' => 'Sambal matah merupakan sambal tradisional khas Bali yang cukup populer. Matah berarti mentah, sehingga sambal ini menggunakan bahan mentah.',
             'price' => '10000',
             'isAvailable' => '1',
             'photo_filename' => "/menuimg/matah.jpg",
@@ -116,13 +116,11 @@ class DatabaseSeeder extends Seeder
         Order::create([
             'customer_account_id' => '1',
             'table_number' => '20',
-            'note' => 'Sambal matahnya jangan yang abal :('
         ]);
 
         Order::create([
             'customer_account_id' => '1',
             'table_number' => '17',
-            'note' => 'Sambal matahnya jangan pake bawang'
         ]);
 
         OrderItem::create([

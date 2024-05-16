@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('isAvailable')->default(false);
             $table->string('photo_filename')->nullable();
             $table->integer('sales')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

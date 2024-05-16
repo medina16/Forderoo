@@ -31,45 +31,54 @@
     <a href="/cart" class="btn btn-primary"><i class="bi bi-basket"></i> Cart</a>
     @if($title == "Browse Menu")
         @foreach($menuitems as $category)
-            <h2>{{ $category->name }}</h2>
-            @foreach($category->menuItem as $categoryitem)
-                <article class="mb-2">
+            <h2>{{ $category->name }}</h2> 
+            @foreach($category->menuItem->sortByDesc('isAvailable') as $categoryitem)
+
+                @if($categoryitem->isAvailable == 1)
+                    <article class="mb-2">
+                @else
+                    <article class="mb-2" style="opacity: 70%">
+                @endif
+
                     <img src="{{ $categoryitem->photo_filename }}" width="200" />
                     <h4>{{ $categoryitem->name }}</h4>
+                    <form action="" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger" href="#"><i class="bi bi-heart"></i></button>
+                    </form>
                     <p><b>Rp{{ $categoryitem->price }}</b></p>
                     <p>{{ $categoryitem->description }}</p>
 
                     @php
-                        $cartItems = session()->get('cart', []);
-                        $inCart = array_key_exists($categoryitem->id, $cartItems);
-                        $quantity = $inCart ? $cartItems[$categoryitem->id] : 0;
+                         $id = $categoryitem->id;
+                        $isAvailable = $categoryitem->isAvailable;
                     @endphp
 
-                    <!-- Add to Cart Button -->
-                    <button type="button" class="add-to-cart-btn btn btn-primary" data-item-id="{{ $categoryitem->id }}" style="{{ $inCart ? 'display:none;' : '' }}">
-                        Add
-                    </button>
+                    @include('addbutton')    
 
-                    <!-- Quantity Control -->
-                    <div class="quantity-control" data-item-id="{{ $categoryitem->id }}" style="{{ $inCart ? '' : 'display:none;' }}">
-                        <button type="button" class="quantity-btn btn btn-secondary minus" data-item-id="{{ $categoryitem->id }}">-</button>
-                        <span class="quantity" id="quantity-{{ $categoryitem->id }}">{{ $quantity }}</span>
-                        <button type="button" class="quantity-btn btn btn-secondary plus" data-item-id="{{ $categoryitem->id }}">+</button>
-                    </div>
                 </article>
+                
             @endforeach
         @endforeach
 
     @elseif($title == "Search results")
-
-        @foreach($results as $item)
-            <article class="mb-2">
-                <img src="{{ $item->photo_filename }}" width="200" />
-                <h4>{{ $item->name }}</h4>
-                <p>{{ $item->description }}</p>
-                <button type="button" class="btn btn-primary">Rp{{ $item->price }}</button>
-            </article>
-        @endforeach
+        <a href="/" class="btn btn-outline-secondary"><i class="bi bi-arrow-left-circle-fill"></i> Kembali</a>
+        @if($results == null)
+            <p>Hasil pencarian tidak ditemukan</p>
+        @else
+            @foreach($results as $item)
+                <article class="mb-2">
+                    <img src="{{ $item->photo_filename }}" width="200" />
+                    <h4>{{ $item->name }}</h4>
+                    <p>{{ $item->description }}</p>
+                    @php
+                        $id = $item->id;
+                        $isAvailable = $item->isAvailable;
+                    @endphp
+                    @include('addbutton')
+                </article>
+            @endforeach
+        @endif
 
     @endif
 

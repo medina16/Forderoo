@@ -5,11 +5,7 @@
         <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-            <a class="nav-link {{ ($title == "Browse Menu") ? 'active' : '' }}" aria-current="page" href="/browse">Browse Menu</a>
-            </li>
-        </ul>
+        
         <ul class="navbar-nav ms-auto">
 
             @if(session()->has('id_customer'))
@@ -18,7 +14,6 @@
                         Welcome back, {{ session('name') }}
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/browse">Browse Menu</a></li>
                         <li><a class="dropdown-item" href="/history">Order History</a></li>
                         <li><a class="dropdown-item" href="/favorite">Favorite Menu</a></li>
                         <li><hr class="dropdown-divider"></li>
