@@ -40,24 +40,11 @@ class MenuItem extends Model
     //     return false;
     // }
 
-    public function getItemInfo($id){
-        $menuItem = MenuItem::find($id);
-        if ($menuItem) {
-            $name = $menuItem->name;
-            $category = $menuItem->category();
-            $description = $menuItem->description;
-            $isAvailable = $menuItem->isAvailable;
-            return [$name, $category, $description, $isAvailable];
-        }
-        return null;
-    }
-
-    public function getPhoto($id){
-        $menuItem = MenuItem::find($id);
-        if ($menuItem) {
-            return $menuItem->photo_filename;
-        }
-        return null;
+    public function isFavorited()
+    {
+        return FavListItem::where('customer_account_id', session('id_customer'))
+                          ->where('menu_item_id', $this->id)
+                          ->exists();
     }
 
     public function getNamePrice($id){

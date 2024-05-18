@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\MenuItem;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Models\CustomerAccount;
@@ -48,6 +49,16 @@ class OrderController extends Controller
 
         $order->status = $validatedData['status'];
         $order->save();
+
+        if($request->status == 2){
+            $orderitems = $order->orderItem()->get();
+            foreach($orderitems as $item){
+                $itemid = $item->menu_item_id;
+                $menuItem = MenuItem::find($itemid);
+                $menuItem->sales = $menuItem->sales + $item->quantity;
+                $menuItem->save();
+            }
+        }
 
         return redirect()->back()->with('status', 'Order status updated successfully!');
     }
