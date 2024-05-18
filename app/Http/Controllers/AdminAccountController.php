@@ -43,7 +43,10 @@ class AdminAccountController extends Controller
 
         return view('admin.manageorder', [
             'title' => 'Manage Order', 
-            'orders' => Order::all(),
+            'orders_0' => Order::where('status', 0)->with('orderItem')->get(),
+            'orders_1' => Order::where('status', 1)->with('orderItem')->get(),
+            'orders_2' => Order::where('status', 2)->with('orderItem')->get(),
+            'orders_3' => Order::where('status', 3)->with('orderItem')->get(),
         ]);   
     }
 

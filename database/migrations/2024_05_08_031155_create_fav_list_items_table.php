@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('fav_list_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('menu_item_id');
-            $table->foreign('menu_item_id')->references('id')->on('menu_items');
+            $table->foreign('menu_item_id')->references('id')->on('menu_items')->onDelete('cascade');;
             $table->unsignedBigInteger('customer_account_id');
-            $table->foreign('customer_account_id')->references('id')->on('customer_accounts');
+            $table->foreign('customer_account_id')->references('id')->on('customer_accounts')->onDelete('cascade');;
             $table->timestamps();
         });
     }

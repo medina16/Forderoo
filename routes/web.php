@@ -34,6 +34,7 @@ Route::get('/order/{tablenumber}', function($tablenumber){
 
 Route::get('/', [MenuItemController::class, 'getMenuList']);
 Route::get('/search', [MenuItemController::class, 'searchItem']);
+Route::post('/favorites/toggle', [FavListItemController::class, 'toggle'])->name('favorites.toggle');
 
 Route::get('/register',[CustomerAccountController::class, 'registerForm'])->middleware('guest');
 Route::post('/register', [CustomerAccountController::class, 'register']);

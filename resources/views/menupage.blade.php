@@ -42,10 +42,9 @@
 
                     <img src="{{ $categoryitem->photo_filename }}" width="200" />
                     <h4>{{ $categoryitem->name }}</h4>
-                    <form action="" method="post">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-danger" href="#"><i class="bi bi-heart"></i></button>
-                    </form>
+                    <button class="btn btn-outline-danger favorite-btn" data-item-id="{{ $categoryitem->id }}">
+                        <i class="bi bi-heart{{ $categoryitem->isFavorited() ? '-fill' : '' }}"></i>
+                    </button>
                     <p><b>Rp{{ $categoryitem->price }}</b></p>
                     <p>{{ $categoryitem->description }}</p>
 
@@ -70,6 +69,9 @@
                 <article class="mb-2">
                     <img src="{{ $item->photo_filename }}" width="200" />
                     <h4>{{ $item->name }}</h4>
+                    <button class="btn btn-outline-danger favorite-btn" data-item-id="{{ $item->id }}">
+                        <i class="bi bi-heart{{ $item->isFavorited() ? '-fill' : '' }}"></i>
+                    </button>
                     <p>{{ $item->description }}</p>
                     @php
                         $id = $item->id;
@@ -85,6 +87,31 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
+            // Handle favorite button click
+            $('.favorite-btn').on('click', function() {
+                var itemId = $(this).data('item-id');
+                var button = $(this);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route("favorites.toggle") }}',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        item_id: itemId
+                    },
+                    success: function(response) {
+                        if(response.status === 'added') {
+                            button.find('i').addClass('bi-heart-fill').removeClass('bi-heart');
+                        } else {
+                            button.find('i').addClass('bi-heart').removeClass('bi-heart-fill');
+                        }
+                    },
+                    error: function(response) {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+
             // Handle the add to cart button click
             $('.add-to-cart-btn').on('click', function() {
                 var itemId = $(this).data('item-id');
