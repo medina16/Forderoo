@@ -25,7 +25,19 @@ class CartController extends Controller
 
         Session::put('cart', $cartItems);
 
-        return response()->json(['success' => 'Cart updated successfully.']);
+        $totalQuantity = 0;
+        $totalPrice = 0;
+        foreach ($cartItems as $id => $qty) {
+            $item = MenuItem::find($id);
+            $totalQuantity += $qty;
+            $totalPrice += $item->price * $qty;
+        }
+
+        return response()->json([
+            'success' => 'Cart updated successfully.',
+            'total_quantity' => $totalQuantity,
+            'total_price' => $totalPrice
+        ]);
     }
 
     public function removeFromCart(Request $request)
@@ -38,36 +50,51 @@ class CartController extends Controller
             Session::put('cart', $cartItems);
         }
 
-        return response()->json(['success' => 'Item removed from cart.']);
+        $totalQuantity = 0;
+        $totalPrice = 0;
+        foreach ($cartItems as $id => $qty) {
+            $item = MenuItem::find($id);
+            $totalQuantity += $qty;
+            $totalPrice += $item->price * $qty;
+        }
+
+        return response()->json([
+            'success' => 'Item removed from cart.',
+            'total_quantity' => $totalQuantity,
+            'total_price' => $totalPrice
+        ]);
     }
 
     public function index()
-    {
-        // Retrieve the cart from the session
-        $cart = Session::get('cart', []);
-        $cartItems = [];
+{
+    // Retrieve the cart from the session
+    $cart = Session::get('cart', []);
+    $cartItems = [];
+    $totalQuantity = 0;
+    $totalPrice = 0;
 
-        // Fetch full item details from the database
-        if (!empty($cart)) {
-            $itemIds = array_keys($cart);
-            $items = MenuItem::whereIn('id', $itemIds)->get();
+    // Fetch full item details from the database
+    if (!empty($cart)) {
+        $itemIds = array_keys($cart);
+        $items = MenuItem::whereIn('id', $itemIds)->get();
 
-            foreach ($items as $item) {
-                $cartItems[] = [
-                    'item' => $item,
-                    'quantity' => $cart[$item->id]
-                ];
-            }
+        foreach ($items as $item) {
+            $quantity = $cart[$item->id];
+            $cartItems[] = [
+                'item' => $item,
+                'quantity' => $quantity
+            ];
+            $totalQuantity += $quantity;
+            $totalPrice += $item->price * $quantity;
         }
-
-        return view('cart', ['cartItems' => $cartItems, 'title' => 'Cart']);
     }
 
-    public function getCartItems(){
+    return view('cart', [
+        'cartItems' => $cartItems,
+        'totalQuantity' => $totalQuantity,
+        'totalPrice' => $totalPrice,
+        'title' => 'Cart'
+    ]);
+}
 
-    }
-
-    public function checkout(){
-        
-    }
 }

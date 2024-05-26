@@ -32,12 +32,12 @@
                             <ul>
                                 @foreach ($order->orderItem as $item)
                                     <?php $price = $item->menuItem->price * $item->quantity; ?>
-                                    <li>{{ $item->menuItem->name }} x {{ $item->quantity }} - Rp {{ $price }}</li>
+                                    <li>{{ $item->menuItem->name }} x {{ $item->quantity }} - @currency($price)</li>
                                     <?php $total = $total + $price;
                                     $price = 0; ?>
                                 @endforeach
                             </ul>
-                            <p>Total: Rp<?php echo $total; ?></p>
+                            <p>Total: @currency($total)</p>
                         </td>
                         <td>
                             <form action="{{ route('admin.orders.updateStatus') }}" method="post">
@@ -87,12 +87,12 @@
                             <ul>
                                 @foreach ($order->orderItem as $item)
                                     <?php $price = $item->menuItem->price * $item->quantity; ?>
-                                    <li>{{ $item->menuItem->name }} x {{ $item->quantity }} - Rp {{ $price }}</li>
+                                    <li>{{ $item->menuItem->name }} x {{ $item->quantity }} - @currency($price)</li>
                                     <?php $total = $total + $price;
                                     $price = 0; ?>
                                 @endforeach
                             </ul>
-                            <p>Total: Rp<?php echo $total; ?></p>
+                            <p>Total: @currency($total)</p>
                         </td>
                         <td>
                             <form action="{{ route('admin.orders.updateStatus') }}" method="post">
@@ -141,12 +141,12 @@
                             <ul>
                                 @foreach ($order->orderItem as $item)
                                     <?php $price = $item->menuItem->price * $item->quantity; ?>
-                                    <li>{{ $item->menuItem->name }} x {{ $item->quantity }} - Rp {{ $price }}</li>
+                                    <li>{{ $item->menuItem->name }} x {{ $item->quantity }} - @currency($price)</li>
                                     <?php $total = $total + $price;
                                     $price = 0; ?>
                                 @endforeach
                             </ul>
-                            <p>Total: Rp<?php echo $total; ?></p>
+                            <p>Total: @currency($total)</p>
                         </td>
                     </tr>
                 @endforeach
@@ -181,12 +181,12 @@
                             <ul>
                                 @foreach ($order->orderItem as $item)
                                     <?php $price = $item->menuItem->price * $item->quantity; ?>
-                                    <li>{{ $item->menuItem->name }} x {{ $item->quantity }} - Rp {{ $price }}</li>
+                                    <li>{{ $item->menuItem->name }} x {{ $item->quantity }} - @currency($price)</li>
                                     <?php $total = $total + $price;
                                     $price = 0; ?>
                                 @endforeach
                             </ul>
-                            <p>Total: Rp<?php echo $total; ?></p>
+                            <p>Total: @currency($total)</p>
                         </td>
                     </tr>
                 @endforeach

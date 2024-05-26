@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
-    public function create(Request $request){
+    public function create(){
         // Retrieve the cart from the session
         $cart = Session::get('cart', []);
         $itemIds = array_keys($cart);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CustomerAccount;
+use Illuminate\Validation\Rule;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -48,20 +49,59 @@ class CustomerAccountController extends Controller
         return view('customer.registPage', ['title' => 'Customer Registration']);
     }
 
+    public function getCustProfile(){
+        if (!session()->has('id_customer')) {
+            return redirect('/login')->with('error', 'Please login to continue');
+        }
+
+        $customer = CustomerAccount::find(session('id_customer'));
+
+        return view('customer.profile', [
+            'title' => 'Profile',
+            'custInfo' => $customer
+        ]);
+    }
+
     public function register(Request $request){
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'email' => ['required', 'email:dns', 'unique:customer_accounts'], // harus unik di table users
-            'password' => 'required|min:5|max:16'
+            'email' => ['required', 'email:dns', 'unique:customer_accounts,email'],
+            'password' => 'required|min:5|max:16',
+            'phone_number' => ['required', 'numeric', 'digits_between:10,20']
         ]);
 
         //dd('registrasi berhasil');
         
         CustomerAccount::create($validatedData);
-        //$request->session()->flash('success', 'Registrasi berhasil! Silakan login');
 
         return redirect()->intended('/login')->with('success', 'Registrasi berhasil! Silakan login');
     }
+
+    public function edit(Request $request){
+        if (!session()->has('id_customer')) {
+            return redirect('/login')->with('error', 'Please login to continue');
+        }
+    
+        $customerId = session('id_customer');
+    
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'email' => ['required', 'email:dns', Rule::unique('customer_accounts', 'email')->ignore($customerId)],
+            'phone_number' => ['required', 'numeric', 'digits_between:10,20']
+        ]);
+    
+        // Find the customer and update their information
+        $customer = CustomerAccount::find($customerId);
+        $customer->name = $validatedData['name'];
+        $customer->email = $validatedData['email'];
+        $customer->phone_number = $validatedData['phone_number'];
+        $customer->save();
+
+        $request->session()->put('name', $customer->name);
+    
+        return redirect()->intended('/profile')->with('success', 'Profil berhasil diedit!');
+    }
+    
 
     public function delete(){
 

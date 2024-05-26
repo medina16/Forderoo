@@ -1,0 +1,146 @@
+/* Apply the font family globally */
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+/* Ensure body and html take full height and use flexbox for centering */
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container width fixed to 375px, centered */
+.container {
+    width: 319px;
+    max-width: 100%;
+}
+
+/* Center content vertically within the container */
+.row {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* Styling for headings and texts */
+h1.h3 {
+    color: var(--Primary-Normal, #92AD42);
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: 0.75px;
+}
+
+.forderoo {
+    color: var(--primary-dark-hover, #586828);
+    text-align: center;
+    font-family: Quicksand, sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: normal;
+    margin-bottom:30px;
+}
+
+/* Button styles */
+.btn {
+    border: none;
+    height: 68px;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: #92AD42;
+    border-radius: 40px;
+    gap: 10px;
+}
+
+.btn-primary:hover {
+    background: #586828;
+}
+
+.btn-secondary {
+    color: #92AD42;
+    background: #EFF3E3;
+    border-radius: 40px;
+    border: 2px solid #92AD42;
+}
+
+.btn-secondary:hover {
+    background: #dde6c4;
+    color: #92AD42;
+    border: 2px solid #bfce8f;
+}
+
+
+/* Margin for form fields */
+.form-fields {
+    margin: 60px 0;
+}
+
+/* Margin for form floating elements */
+.form-floating {
+    margin-bottom: 10px;
+}
+
+/* Styling for form input */
+.form-floating input {
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: 0.75px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 20px;
+    background: var(--primary-light-hover, #EFF3E3);
+}
+
+/* Color for labels */
+.form-floating label {
+    color: #989090;
+}
+
+/* Form label styling */
+.form-floating>.form-control-plaintext~label::after, 
+.form-floating>.form-control:focus~label::after, 
+.form-floating>.form-control:not(:placeholder-shown)~label::after, 
+.form-floating>.form-select~label::after {
+    color: #989090;
+    background-color: unset;
+}
+
+/* Margin for buttons in the button group */
+.button-group .btn {
+    margin: 5px 0;
+}
+
+/* Position the close button in the top left of the alert */
+.alert-success {
+    position: relative;
+    background: #EFF3E3;
+    border: 2px solid #92AD42;
+    margin:10px;
+}
+
+.alert-danger {
+    position: relative;
+    background: #f8d7da;
+    border: 2px solid #f1aeb5;
+    margin:10px;
+}
+
+.alert .alert-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
