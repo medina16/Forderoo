@@ -33,7 +33,7 @@ class FavListItemController extends Controller
     
     public function getCustFav(){
         if (!session()->has('id_customer')) {
-            return redirect('/login')->with('error', 'Please login to continue');
+            return redirect('/login')->with('error', 'Mohon login untuk membuka halaman.');
         }
 
         $customer = CustomerAccount::find(session('id_customer'));

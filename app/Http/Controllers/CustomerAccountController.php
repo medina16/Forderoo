@@ -36,13 +36,13 @@ class CustomerAccountController extends Controller
             return redirect()->intended('/')->with('loginSuccess', 'Login berhasil! Selamat datang kembali');
         }
 
-        return back()->with('loginError', 'Login gagal!');
+        return back()->with('error', 'Login gagal! Mohon masukkan data yang benar');
     }
 
     public function logout(){
         auth()->guard('customer')->logout();
         Session::flush();
-        return redirect('/')->with('logoutSuccess', 'You are logged out sucessfully');
+        return redirect('/')->with('logoutSuccess', 'Logout berhasil');
     }
 
     public function registerForm(){
@@ -51,7 +51,7 @@ class CustomerAccountController extends Controller
 
     public function getCustProfile(){
         if (!session()->has('id_customer')) {
-            return redirect('/login')->with('error', 'Please login to continue');
+            return redirect('/login')->with('error', 'Mohon login untuk membuka halaman.');
         }
 
         $customer = CustomerAccount::find(session('id_customer'));
@@ -79,7 +79,7 @@ class CustomerAccountController extends Controller
 
     public function edit(Request $request){
         if (!session()->has('id_customer')) {
-            return redirect('/login')->with('error', 'Please login to continue');
+            return redirect('/login')->with('error', 'Mohon login untuk membuka halaman.');
         }
     
         $customerId = session('id_customer');
