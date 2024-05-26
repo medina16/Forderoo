@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container">
-        <h2>Forderoo</h2>
+        <a href="/"><h2>Forderoo</h2></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -14,6 +14,7 @@
                         Welcome back, {{ session('name') }}
                     </a>
                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/profile">Profile</a></li>
                         <li><a class="dropdown-item" href="/history">Order History</a></li>
                         <li><a class="dropdown-item" href="/favorite">Favorite Menu</a></li>
                         <li><hr class="dropdown-divider"></li>

@@ -34,7 +34,8 @@ class DatabaseSeeder extends Seeder
         CustomerAccount::create([
             'email' => 'mau.tau167@gmail.com',
             'password' => bcrypt("16jul2003"),
-            'name' => 'Medina Fitri'
+            'name' => 'Medina Fitri',
+            'phone_number' => '085692563276'
         ]);
 
         Category::create([

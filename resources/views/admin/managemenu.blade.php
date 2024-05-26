@@ -34,7 +34,7 @@
                     <td>{{ $item->category->name }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->description }}</td>
-                    <td>{{ $item->price }}</td>
+                    <td>@currency($item->price)</td>
                     <td>
                         <form action="{{ route('admin.menu.isAvailable') }}" method="post">
                             @csrf

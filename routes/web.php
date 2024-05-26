@@ -31,6 +31,9 @@ Route::get('/order/{tablenumber}', function($tablenumber){
     Session::put('tablenumber', $tablenumber);
     return redirect('/');
 });
+Route::get('/tes', function(){
+    return view('tes', ['title' => 'TES']);
+});
 
 Route::get('/', [MenuItemController::class, 'getMenuList']);
 Route::get('/search', [MenuItemController::class, 'searchItem']);
@@ -46,6 +49,8 @@ Route::post('/logout', [CustomerAccountController::class, 'logout']);
 
 Route::get('/favorite', [FavListItemController::class, 'getCustFav']);
 Route::get('/history', [OrderController::class, 'getCustHistory']);
+Route::get('/profile', [CustomerAccountController::class, 'getCustProfile']);
+Route::post('/profile', [CustomerAccountController::class, 'edit']);
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
