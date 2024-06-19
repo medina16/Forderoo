@@ -73,7 +73,7 @@ class OrderController extends Controller
         $orders = $customer->order()->get()->sortByDesc('created_at');
 
         return view('customer.history', [
-            'title' => 'Home',
+            'title' => 'Order History',
             'orders' => $orders
         ]);
     }

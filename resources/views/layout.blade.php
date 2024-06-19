@@ -17,9 +17,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    {{-- @include('navbar') --}}
+    @yield('navbar')
 
-    <div class="container mt-4">
+    <div class="container mt-6 mb-6">
         @yield('container')
     </div>
 

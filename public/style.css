@@ -17,7 +17,11 @@ html {
 .container {
     width: 319px;
     max-width: 100%;
-    margin-top: 30px;
+    padding-bottom: 40px;
+}
+
+.navbar .container{
+    padding-bottom:0px
 }
 
 /* Center content vertically within the container */
@@ -146,6 +150,17 @@ h2 {
     margin: 5px 0;
 }
 
+.btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.msg-box{
+    width: 90%;
+    display: block;
+}
+
 /* Position the close button in the top left of the alert */
 .alert-success {
     position: relative;
@@ -160,7 +175,7 @@ h2 {
 }
 
 .alert{
-    margin: 30px 0;
+    /* margin: 30px 0; */
 }
 
 .alert .alert-close {
@@ -286,8 +301,24 @@ article h4 {
 
 .menu-name-fav {
     font-weight: 600;
-    display: inline-block;
+    display: flex;
     min-width: 97px;
+    align-items: center;
+    gap: 8px;
+    max-width: 174px;
+    line-height: 17px;
+}
+
+button.btn.btn-outline-danger.favorite-btn:hover {
+    background: none;
+    color: #92AD42;
+}
+
+button.btn.btn-outline-danger.favorite-btn {
+    height: 0px;
+    padding: 0;
+    font-size: 14px;
+    margin-bottom: 3px;
 }
 
 .menu-desc {
@@ -305,6 +336,7 @@ article h4 {
     flex-direction: column;
     gap: 8px;
     align-items: center;
+    width: 30%;
 }
 
 .menu-right .add-to-cart-btn {
@@ -601,4 +633,9 @@ article h4 {
     position: absolute;
     right: 24px;
     top: 18px;
+}
+
+.floatbar{
+    position: fixed;
+    bottom: 20px;
 }

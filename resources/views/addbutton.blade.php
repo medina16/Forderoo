@@ -11,9 +11,7 @@
             Add
         </button>
     @else
-        <button type="button" class="btn btn-danger">
-            Out of stock
-        </button>
+        <div class="out-of-stock">Stok habis</div>
     @endif
 
     <!-- Quantity Control -->
