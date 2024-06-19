@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Http\Controllers\CartController;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -32,13 +33,13 @@ class MenuItemController extends Controller
         $menu->photo_filename = "/menuimg/" . $imageName;
         $menu->save();
 
-        return redirect('/admin/menu')->with('success', 'Menu created successfully.');
+        return redirect('/admin/menu')->with('success', 'Menu berhasil dibuat.');
     }
 
 
     public function removeFromMenu(Request $request){
         MenuItem::find($request->id)->delete();
-        return redirect('/admin/menu')->with('success', 'Menu deleted successfully.');
+        return redirect('/admin/menu')->with('success', 'Menu berhasil dihapus.');
     }
 
     public function editInfo(Request $request){
@@ -65,7 +66,7 @@ class MenuItemController extends Controller
 
         $menu->save();
 
-        return redirect('/admin/menu')->with('success', 'Menu info edited successfully.');
+        return redirect('/admin/menu')->with('success', 'Menu berhasil diperbarui.');
     }
 
     public function updateAvailable(Request $request){
@@ -83,21 +84,36 @@ class MenuItemController extends Controller
     }
 
     public function searchItem(Request $request){
+        $cartController = new CartController();
+        list($cartItems, $totalQuantity, $totalPrice) = $cartController->countTotal();
+
         $search = $request->search;
         $results = MenuItem::where(function($query) use ($search){
             $query->where('name', 'like', "%$search%")
                   ->orWhere('description', 'like', "%$search%");
         })->get(); // Added ->get() to execute the query and retrieve results
-    
-        return view('menupage', compact('results'))->with('title', 'Search results'); // Simplified passing title to view
+        
+        return view('menupage', [
+            'title' => 'Search Results',
+            'results' => $results,
+            'cartItems' => $cartItems,
+            'totalQuantity' => $totalQuantity,
+            'totalPrice' => $totalPrice
+        ]);
+
     }
     
 
     public function getMenuList(){
+        $cartController = new CartController();
+        list($cartItems, $totalQuantity, $totalPrice) = $cartController->countTotal();
+
         return view('menupage', [
             'title' => 'Browse Menu',
             'menuitems' => Category::with('menuItem')->get(),
-            'cartItems' => Session::get('cart', [])
+            'cartItems' => $cartItems,
+            'totalQuantity' => $totalQuantity,
+            'totalPrice' => $totalPrice
         ]);
     }
 

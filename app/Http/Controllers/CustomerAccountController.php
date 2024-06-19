@@ -36,7 +36,7 @@ class CustomerAccountController extends Controller
             return redirect()->intended('/')->with('loginSuccess', 'Login berhasil! Selamat datang kembali');
         }
 
-        return back()->with('error', 'Login gagal! Mohon masukkan data yang benar');
+        return back()->with('error', 'Login gagal! Mohon masukkan data login yang benar');
     }
 
     public function logout(){
@@ -46,6 +46,9 @@ class CustomerAccountController extends Controller
     }
 
     public function registerForm(){
+        if (session()->has('id_customer')) {
+            return back();
+        }
         return view('customer.registPage', ['title' => 'Customer Registration']);
     }
 
@@ -102,11 +105,5 @@ class CustomerAccountController extends Controller
         return redirect()->intended('/profile')->with('success', 'Profil berhasil diedit!');
     }
     
-
-    public function delete(){
-
-    }
-
-    // ----------------------------------
     
 }

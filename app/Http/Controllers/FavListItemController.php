@@ -40,7 +40,7 @@ class FavListItemController extends Controller
         $favitems = $customer->favListItem()->with('menuItem')->get();
 
         return view('customer.favlist', [
-            'title' => 'Home',
+            'title' => 'Favorite',
             'favitems' => $favitems
         ]);
     }

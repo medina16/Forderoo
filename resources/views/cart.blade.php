@@ -1,35 +1,68 @@
 @extends('layout')
+@section('navbar')
+    @include('navbar')
+@endsection
 
 @section('container')
-    <a href="/" class="btn btn-outline-secondary"><i class="bi bi-arrow-left-circle-fill"></i> Kembali</a>
-    <h1>Your Cart</h1>
     @if (count($cartItems) > 0)
-        @foreach ($cartItems as $cartItem)
-            <article class="mb-2">
-                <img src="{{ $cartItem['item']->photo_filename }}" width="200" />
-                <h4>{{ $cartItem['item']->name }}</h4>
-                <p><b>@currency($cartItem['item']->price)</b></p>
-                @php
-                    $id =  $cartItem['item']->id;
-                    $isAvailable = $cartItem['item']->isAvailable;
-                @endphp
-                @include('addbutton')
-            </article>
-        @endforeach
-        
+        <div class="category-menus">
+            @foreach ($cartItems as $cartItem)
+                <article class="mb-2">
+                    <div class="menu-left" style="width: 95px; height: 95px; gap: 33px;">
+                        <img src="{{ $cartItem['item']->photo_filename }}" style="width: 95px; height: 95px; border-radius: 15px;" />
+                    </div>
+                    <div class="menu-right" style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+                        <div class="menu-name-fav">
+                            {{ $cartItem['item']->name }}
+                        </div>
+                        <div>@currency($cartItem['item']->price)</div>
+                        @php
+                            $id = $cartItem['item']->id;
+                            $isAvailable = $cartItem['item']->isAvailable;
+                        @endphp
+                        @include('addbutton')
+                    </div>
+                </article>
+            @endforeach
+        </div>
+
         <div id="cart-summary">
-            <div class="d-flex justify-content-between">
-                <span>Total Items: <span id="total-quantity">{{ $totalQuantity }}</span></span>
-                <span>Total Price: <span id="total-price">@currency($totalPrice)</span></span>
+            <div class="total-item">
+                <div class="total-pesanan">
+                    <div class="text-left">Total Items</div>
+                    <div class="text-right">
+                        <span id="total-quantity">{{ $totalQuantity }}</span> item(s)
+                    </div>
+                </div>
+                <div class="total-harga">
+                    <div class="text-left">Total Price</div>
+                    <div class="text-right" style="color: var(--Primary, #00880C); text-align: right; font-size: 20px; font-style: normal; font-weight: 600; line-height: 28px;">
+                        <span id="total-price">@currency($totalPrice)</span>
+                    </div>
+                </div>
             </div>
         </div>
-        
+
+        <h6 class="h6" style="margin: 10px 0px 21px 0px;">
+            <a href="/" class="text-decoration-underline">Ingin menambahkan menu lain?</a>
+        </h6>
+
         <form action="/cart" method="post">
             @csrf
-            <button class="btn btn-primary w-100 py-2 mt-3" type="submit"><i class="bi bi-receipt"></i> Check Out</button>
+            <div class="button-group">
+                <button class="btn btn-success floatbar" type="submit" >
+                    <div class="checkout">
+                        <p style="color: var(--primary-light-active, #DDE6C4); font-size: 15px; font-style: normal; font-weight: 600; line-height: normal; letter-spacing: -0.3px; margin: auto; width: 215px; text-align: center;">
+                            Check Out
+                        </p>
+                    </div>
+                </button>
+            </div>
         </form>
     @else
-        <p>Your cart is empty.</p>
+        <p style="color: #000; font-family: Poppins; font-size: 16px; font-style: normal; font-weight: 400; line-height: normal; letter-spacing: -0.3px;">
+            Belum ada item yang ditambahkan
+        </p>
     @endif
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
