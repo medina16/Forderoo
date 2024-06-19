@@ -65,36 +65,40 @@ class CartController extends Controller
         ]);
     }
 
-    public function index()
-{
-    // Retrieve the cart from the session
-    $cart = Session::get('cart', []);
-    $cartItems = [];
-    $totalQuantity = 0;
-    $totalPrice = 0;
+    public function countTotal()
+    {
+        // Retrieve the cart from the session
+        $cart = Session::get('cart', []);
+        $cartItems = [];
+        $totalQuantity = 0;
+        $totalPrice = 0;
 
-    // Fetch full item details from the database
-    if (!empty($cart)) {
-        $itemIds = array_keys($cart);
-        $items = MenuItem::whereIn('id', $itemIds)->get();
+        // Fetch full item details from the database
+        if (!empty($cart)) {
+            $itemIds = array_keys($cart);
+            $items = MenuItem::whereIn('id', $itemIds)->get();
 
-        foreach ($items as $item) {
-            $quantity = $cart[$item->id];
-            $cartItems[] = [
-                'item' => $item,
-                'quantity' => $quantity
-            ];
-            $totalQuantity += $quantity;
-            $totalPrice += $item->price * $quantity;
+            foreach ($items as $item) {
+                $quantity = $cart[$item->id];
+                $cartItems[] = [
+                    'item' => $item,
+                    'quantity' => $quantity
+                ];
+                $totalQuantity += $quantity;
+                $totalPrice += $item->price * $quantity;
+            }
         }
+
+        return [$cartItems, $totalQuantity, $totalPrice];
     }
-
-    return view('cart', [
-        'cartItems' => $cartItems,
-        'totalQuantity' => $totalQuantity,
-        'totalPrice' => $totalPrice,
-        'title' => 'Cart'
-    ]);
+    public function index(){
+        $cart = $this->countTotal();
+        return view('cart', [
+            'cartItems' => $cart[0],
+            'totalQuantity' => $cart[1],
+            'totalPrice' => $cart[2],
+            'title' => 'Cart'
+        ]);
+    }
 }
-
-}
+?>
