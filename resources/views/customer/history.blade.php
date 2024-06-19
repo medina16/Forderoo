@@ -11,11 +11,23 @@
             </a>
         </div>
         <div style="display:block">
-            @foreach ($orders as $order)
-                <?php $total = 0; ?>
-                <div class="category-menus">
-                    <div
-                        style="
+            @if ($orders->isEmpty())
+                <p
+                    style="color: #000;
+                    font-family: Poppins;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                    letter-spacing: -0.3px;">
+                    Belum ada riwayat pesanan
+                </p>
+            @else
+                @foreach ($orders as $order)
+                    <?php $total = 0; ?>
+                    <div class="category-menus">
+                        <div
+                            style="
         padding: 4px 13px;
         justify-content: center;
         align-items: center;
@@ -31,49 +43,55 @@
         margin-top: 30px;
         display:flex;
         flex-direction: column;
-       "><b>{{ $order->created_at }}</b><div>{{ $order->getStatus() }}</div></div>
-                    @foreach ($order->orderItem as $item)
-                        <?php $price = $item->menuItem->price * $item->quantity; ?>
-                        <article class="mb-2">
-                            <div class="menu-left" style="width: 95px;
+       ">
+                            <b>{{ $order->created_at }}</b>
+                            <div>{{ $order->getStatus() }}</div>
+                        </div>
+                        @foreach ($order->orderItem as $item)
+                            <?php $price = $item->menuItem->price * $item->quantity; ?>
+                            <article class="mb-2">
+                                <div class="menu-left"
+                                    style="width: 95px;
             height: 95px;
             gap: 33px;">
-                                <img src="{{ $item->menuItem->photo_filename }} " style="width: 95px; height: 95px; border-radius: 15px;" />
-                            </div>
-                            <div class="menu-right"
-                                style="display: flex;
+                                    <img src="{{ $item->menuItem->photo_filename }} "
+                                        style="width: 95px; height: 95px; border-radius: 15px;" />
+                                </div>
+                                <div class="menu-right"
+                                    style="display: flex;
             flex-direction: column;
             align-items: flex-start;
             gap: 10px;">
-                                <div class="menu-name-fav">
-                                    {{ $item->menuItem->name }}
+                                    <div class="menu-name-fav">
+                                        {{ $item->menuItem->name }}
+                                    </div>
+                                    <div>@currency($item->menuItem->price)</div>
                                 </div>
-                                <div>@currency($item->menuItem->price)</div>
-                            </div>
-                            <div class="quantities"
-                                style="display: flex;
+                                <div class="quantities"
+                                    style="display: flex;
             color: #000;
             font-style: normal;
             line-height: normal; position:relative;right:-90px">
-                                x {{ $item->quantity }}
-                                <?php $total = $total + $price;
-                                $price = 0; ?>
-                            </div>
-                        </article>
-                    @endforeach
-                </div>
-
-                <div class="line" style="width: 319px; background: rgba(0, 0, 0, 0.20);"></div>
-                <div class="total-pesanan" style="padding-top: 15px; width:319px">
-                    <div class="text-left" style="font-size: 16px;">
-                        Total Bill
+                                    x {{ $item->quantity }}
+                                    <?php $total = $total + $price;
+                                    $price = 0; ?>
+                                </div>
+                            </article>
+                        @endforeach
                     </div>
-                    <div class="text-right" style="font-size: 16px; font-weight: 600;">
 
-                        @currency($total)
+                    <div class="line" style="width: 319px; background: rgba(0, 0, 0, 0.20);"></div>
+                    <div class="total-pesanan" style="padding-top: 15px; width:319px">
+                        <div class="text-left" style="font-size: 16px;">
+                            Total Bill
+                        </div>
+                        <div class="text-right" style="font-size: 16px; font-weight: 600;">
+
+                            @currency($total)
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            @endif
         </div>
     </div>
 @endsection
